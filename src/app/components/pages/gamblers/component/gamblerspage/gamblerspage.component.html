@@ -1,0 +1,114 @@
+
+<!--Contenedor principal-->
+<div class="container">
+  <!-- Fila con contenido centrado -->
+<div class="row text-center mt-4">  
+      
+    <div class="col">
+
+      <h2>Apostadores jugando:</h2> <!-- Encabezado -->
+
+    </div> 
+
+</div>
+
+<!-- Fila con margen superior -->
+<div class="row-mt-5">
+
+    <div class="col-md-2">
+
+        <label for="idSedes" class="from-label">Codigo Identificatorio</label> <!-- Etiqueta para el campo de ID --> 
+
+        <input  type="number" name="id" id="idSede" class="form-control" [(ngModel)]="apostadoresData.apostadoresDTOid"> <!-- Campo de entrada de ID con enlace de datos [(ngModel)] -->
+
+        <button class="btn btn-primary mt-2" (click)="searchItem()"> Buscar  <i class="bi bi-search icon-padding"></i> </button> <!-- Botón de búsqueda con evento click -->
+        
+        <div *ngIf="elementoNoEncontrado" class="alert alert-danger mt-2">
+            Elemento no encontrado en la lista. <!-- Div para mostrar un mensaje de alerta si el elemento no se encuentra -->
+        </div>
+    
+    </div>
+
+    <div class="col-md-4">
+
+    </div>
+
+</div>
+
+<br> <!--Salto de linea-->
+
+<!-- Fila con margen superior -->
+<div class="row-mt-5">    
+<div class="col">
+  <button class="btn btn-success" type="button" [routerLink]="['/controlGamblers']" (click)="clearPostData()"> Agregar <i class="bi bi-plus-circle-fill icon-padding"></i></button> <!-- Botón de agregar -->
+
+  <button class="btn btn-warning m-2" type="button" [routerLink]="['/controlGamblers']" (click)="enableUpdateMode()" [disabled]="isUpdateDisabled">Update <i class="bi bi-pencil-fill icon-padding"></i></button> <!-- Botón de update -->
+
+  <button class="btn btn-danger" type="button" (click)="deleteItem()" [disabled]="isDeleteDisabled">Eliminar <i class="bi bi-trash3-fill icon-padding"></i></button> <!-- Botón de eliminar -->
+</div>
+</div>
+
+<!-- Fila con margen superior -->
+<div class="row-mt-5">
+
+<div class="col">
+
+  <!-- Tabla condicional, solo se muestra si "datatable" está definido -->
+
+  <table *ngIf="datatable" id="dtSede" class="table table-stripped">
+
+    <thead>
+
+      <tr>
+
+        <th class="select-column">Seleccionar</th> <!-- Encabezado de columna -->
+
+        <th class="id-column">ID</th> <!-- Encabezado de columna -->
+
+        <th>Apostador</th> <!-- Encabezado de columna -->
+
+        <th>Puntaje</th>
+
+        <th>E-Mail</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+      <!-- Bucle for para cada elemento de "datatable[0]" -->
+      <tr *ngFor="let item of getVisibleItems()">
+        <td>
+          <input type="checkbox" [(ngModel)]="item.seleccionado" (change)="selectItemAndStoreID(item); selectItemAndStoreNombre(item); selectItemAndStoreMail(item)">
+        </td>
+        <td>{{item.idApostador}}</td>
+        <td>{{item.aposNombre}}</td>
+        <td>{{item.aposPuntos}}</td>
+        <td>{{item.apostMail}}</td>
+        <td></td>
+      </tr>
+    </tbody>      
+  </table>
+  <!-- Controles de paginación -->
+  <div class="text-center mt-3">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="changePage(1)"><i class="bi bi-chevron-double-left"></i></a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="changePage(currentPage - 1)"><i class="bi bi-chevron-left"></i></a>
+      </li>
+      <li class="page-item" [class.active]="page === currentPage" *ngFor="let page of totalPagesArray">
+        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="changePage(currentPage + 1)"><i class="bi bi-chevron-right"></i></a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="changePage(totalPages)"><i class="bi bi-chevron-double-right"></i></a>
+      </li>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
