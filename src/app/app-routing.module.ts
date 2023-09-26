@@ -15,24 +15,29 @@ import { ResultspageComponent } from './components/pages/results/component/resul
 import { ControlTeamComponent } from './components/pages/teams/component/control-team/control-team.component';
 import { ControlHostComponent } from './components/pages/hosts/component/control-host/control-host.component';
 import { ControlGamblersComponent } from './components/pages/gamblers/component/control-gamblers/control-gamblers.component';
+import { TournamentspageComponent } from './components/pages/tournaments/components/tournamentspage/tournamentspage.component';
+import { ControlTournamentsComponent } from './components/pages/tournaments/components/control-tournaments/control-tournaments.component';
+import { TeamsxtournamentComponent } from './components/pages/teamsxtournament/components/teamsxtournament/teamsxtournament.component';
 
 const routes: Routes = 
 [  
 { path: '', component: HomepageComponent },
 { path: 'teams', component: TeamspageComponent },
-{ path: 'bets', component: BetspageComponent},
-{ path: 'gamblers', component: GamblerspageComponent},
-{ path: 'groups', component: GroupspageComponent},
-{ path: 'hosts', component: HostspageComponent},
-{ path: 'matches', component: MatchespageComponent},
-{ path: 'playoffs', component: PlayoffspageComponent},
-{ path: 'ruleset', component: RulespageComponent},
-{ path: 'states', component: StatespageComponent},
-{ path: 'results', component: ResultspageComponent},
-{ path: 'controlTeams', component: ControlTeamComponent},
-{ path: 'controlHosts', component: ControlHostComponent},
-{ path: 'controlGamblers', component: ControlGamblersComponent}
-
+{ path: 'bets', component: BetspageComponent },
+{ path: 'gamblers', component: GamblerspageComponent },
+{ path: 'groups', component: GroupspageComponent },
+{ path: 'hosts', component: HostspageComponent },
+{ path: 'matches', component: MatchespageComponent },
+{ path: 'playoffs', component: PlayoffspageComponent },
+{ path: 'ruleset', component: RulespageComponent },
+{ path: 'states', component: StatespageComponent },
+{ path: 'results', component: ResultspageComponent },
+{ path: 'controlTeams', component: ControlTeamComponent },
+{ path: 'controlHosts', component: ControlHostComponent },
+{ path: 'controlGamblers', component: ControlGamblersComponent },
+{ path: 'tournaments', component: TournamentspageComponent },
+{ path: 'controlTournaments', component: ControlTournamentsComponent },
+{ path: 'TeamsXTournaments', component: TeamsxtournamentComponent }
 ];
 
 @NgModule({

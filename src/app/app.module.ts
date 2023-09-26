@@ -27,6 +27,10 @@ import { SharedDataService } from './components/services/sharedService';
 import { equiposService } from './components/services/equiposService';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ControlGamblersComponent } from './components/pages/gamblers/component/control-gamblers/control-gamblers.component';
+import { TournamentspageComponent } from './components/pages/tournaments/components/tournamentspage/tournamentspage.component';
+import { ControlTournamentsComponent } from './components/pages/tournaments/components/control-tournaments/control-tournaments.component';
+import { TeamsxtournamentComponent } from './components/pages/teamsxtournament/components/teamsxtournament/teamsxtournament.component';
+
 
 
 
@@ -48,7 +52,10 @@ import { ControlGamblersComponent } from './components/pages/gamblers/component/
     TeamspageComponent,
     ControlTeamComponent,
     ControlHostComponent,
-    ControlGamblersComponent
+    ControlGamblersComponent,
+    TournamentspageComponent,
+    ControlTournamentsComponent,
+    TeamsxtournamentComponent
   ],
   imports: [
     BrowserModule,

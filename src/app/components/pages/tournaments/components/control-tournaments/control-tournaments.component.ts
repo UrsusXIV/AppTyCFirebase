@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedDataService } from 'src/app/components/services/sharedService';
-import { equiposService } from 'src/app/components/services/equiposService';
-import { equiposDTO } from 'src/app/components/cruds/models/equipos/equiposdto';
+import { competenciasService } from 'src/app/components/services/competenciasService';
+import { competenciasDTO } from 'src/app/components/cruds/models/competencias/competenciasdto';
 import { Router } from '@angular/router';
 
-
 @Component({
-  selector: 'app-control-team',
-  templateUrl: './control-team.component.html',
-  styleUrls: ['./control-team.component.css']
+  selector: 'app-control-tournaments',
+  templateUrl: './control-tournaments.component.html',
+  styleUrls: ['./control-tournaments.component.css']
 })
-export class ControlTeamComponent implements OnInit {
-
+export class ControlTournamentsComponent implements OnInit {
+  // Propiedades del componente
   id: number;
   nombre: string;
   idRecibido: number | null = null;
@@ -20,10 +19,10 @@ export class ControlTeamComponent implements OnInit {
 
   constructor(
     private SharedDataService: SharedDataService,
-    private equiposService: equiposService,
+    private competenciasService: competenciasService,
     private router: Router
   ) {
-    // Inicializar propiedades
+    // Inicializar propiedades.
     this.id = 0;
     this.nombre = '';
   }
@@ -38,7 +37,7 @@ export class ControlTeamComponent implements OnInit {
 
     if (this.idRecibido != null) {
       this.id = this.idRecibido;
-      if(this.idRecibido == 0){
+      if (this.idRecibido == 0) {
         this.idRecibido = null;
         this.id = 0;
       }
@@ -51,27 +50,25 @@ export class ControlTeamComponent implements OnInit {
     console.log('ID seleccionado:', this.id);
   }
 
+  // Navegar de vuelta a la lista de torneos
   ReturnToTeams(): void {
-
-    this.router.navigate(['/teams'])
+    this.router.navigate(['/tournaments']);
   }
 
+  // Manejar la acción de aceptar (Guardar o Actualizar)
   aceptar(): void {
-    if (this.updateMode) 
-    {
-      // Crear objeto 'pais' con los datos ingresados
-      const equipo: equiposDTO = {
-      equiposDTOid: this.id,
-        equiposDTOnombre: this.nombre
+    if (this.updateMode) {
+      // Crear objeto 'competencia' con los datos ingresados
+      const competencia: competenciasDTO = {
+        competenciasDTOid: this.id,
+        competenciasDTOnombre: this.nombre
       };
 
-      // Realizar solicitud PUT al servicio PaisesService
-      this.equiposService.putEquipos(this.id, equipo).subscribe(
-        (response) => 
-        {
+      // Realizar solicitud PUT al servicio competenciasService para actualizar
+      this.competenciasService.putCompetencia(this.id, competencia).subscribe(
+        (response) => {
           console.log('PUT exitoso:', response);
-          if(response)
-          {
+          if (response) {
             this.ReturnToTeams();
           }
         },
@@ -80,21 +77,18 @@ export class ControlTeamComponent implements OnInit {
         }
       );
 
-    } 
-    else 
-    {
-      // Crear objeto 'pais' con los datos ingresados
-      const equipo: equiposDTO = {
-        equiposDTOid: this.id,
-        equiposDTOnombre: this.nombre
+    } else {
+      // Crear objeto 'competencia' con los datos ingresados
+      const competencia: competenciasDTO = {
+        competenciasDTOid: this.id,
+        competenciasDTOnombre: this.nombre
       };
-  
-      // Realizar solicitud POST al servicio PaisesService
-      this.equiposService.postEquipos(equipo).subscribe(
+
+      // Realizar solicitud POST al servicio competenciasService para crear
+      this.competenciasService.postCompetencia(competencia).subscribe(
         (response) => {
           console.log('POST exitoso:', response);
-          if(response)
-          {
+          if (response) {
             this.ReturnToTeams();
           }
         },
@@ -105,15 +99,10 @@ export class ControlTeamComponent implements OnInit {
     }
   }
 
-
+  // Validar la entrada de datos (si el ID es menor que 0, establecerlo en 1)
   validateInput(): void {
     if (this.id < 0) {
       this.id = 1;
     }
   }
-  
-
 }
-
-
-

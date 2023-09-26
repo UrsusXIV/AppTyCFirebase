@@ -4,13 +4,17 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SharedDataService {
+  // Variables para almacenar datos compartidos
   private idSeleccionado: number | null = null;
+  private idCompetenciaSeleccionada: number | null = null;
   private nombreSeleccionado: string | null = null;
+  private nombreCompetenciaSeleccionada: string | null = null;
   private updateMode: boolean | null = null;
   private emailSeleccionado: string | null = null;
 
   constructor() { }
 
+  // Métodos para manejar la variable idSeleccionado
   getIdSeleccionado(): number | null {
     return this.idSeleccionado;
   }
@@ -18,7 +22,17 @@ export class SharedDataService {
   setIdSeleccionado(id: number): void {
     this.idSeleccionado = id;
   }
+
+  // Métodos para manejar la variable idCompetenciaSeleccionada
+  getIdCompetenciaSeleccionada(): number | null {
+    return this.idCompetenciaSeleccionada;
+  }
+
+  setIdCompetenciaSeleccionada(idCom: number): void {
+    this.idCompetenciaSeleccionada = idCom;
+  }
   
+  // Métodos para manejar la variable nombreSeleccionado
   getNombreSeleccionado(): string | null {
     return this.nombreSeleccionado;
   }
@@ -27,15 +41,26 @@ export class SharedDataService {
     this.nombreSeleccionado = nombre;
   }
 
-  setUpdateModeEnabled(isEnabled: boolean):void {
-    this.updateMode = isEnabled;
+  // Metodos para manejar la variable nombreCompetenciaSeleccionada
 
+  getNombreCompetenciaSeleccionada(): string | null {
+    return this.nombreCompetenciaSeleccionada;
+  }
+
+  setNombreCompetenciaSeleccionada(nombreCom: string): void {
+    this.nombreCompetenciaSeleccionada = nombreCom
+  }
+
+  // Métodos para manejar la variable updateMode
+  setUpdateModeEnabled(isEnabled: boolean): void {
+    this.updateMode = isEnabled;
   }
 
   getUpdateModeEnabled(): boolean | null {
     return this.updateMode;
   }
 
+  // Métodos para manejar la variable emailSeleccionado
   setEmailSeleccionado(email: string): void {
     this.emailSeleccionado = email;
   }
@@ -43,5 +68,4 @@ export class SharedDataService {
   getEmailSeleccionado(): string | null {
     return this.emailSeleccionado;
   }
-
 }
