@@ -1,1 +1,127 @@
-<p>matchespage works!</p>
+<div class="container">
+    <!-- Fila con contenido centrado -->
+  <div class="row text-center mt-4">  
+        
+      <div class="col">
+
+        <h2>Lista de Partidos</h2> <!-- Encabezado -->
+
+      </div> 
+
+  </div>
+
+  <div class="row-mt-5">
+
+    <div class="col-md-2">
+
+        <label for="idCompetencia" class="from-label">Competencia</label> <!-- Etiqueta para el campo de ID --> 
+
+        <select [(ngModel)]="loadedCompetenciaId" (change)="onCompetenciaSelected()">
+          <option value="" disabled selected>Selecciona una competencia</option>
+          <option *ngFor="let competencia of comboComDatatable[0]" [value]="competencia.idCompetencia">
+            {{ competencia.competenciaNombre }} 
+          </option>
+        </select>
+
+        <label for="equiposAñadibles" class="from-label">Equipos</label> 
+        
+        <select [(ngModel)]="loadedEquipoId">
+          <option value="" disabled selected>Selecciona un equipo </option>
+          <option *ngFor="let equipoCombo of comboEqDatatable[0]" [value]="equipoCombo.idEquipo">
+            {{ equipoCombo.equipoNombre }} 
+          </option>
+        </select>
+
+        <label for="equiposAñadibles" class="from-label">Grupos</label> 
+
+        <select [(ngModel)]="grupoSeleccionado" (change)="onGrupoSelected()" [disabled]="isGroupsDisabled">
+          <option value="" disabled selected>Selecciona un grupo</option>
+          <option *ngFor="let grupo of gruposDisponibles" [value]="grupo">
+            {{ grupo }}
+          </option>
+        </select>
+        
+
+    </div>
+    <br> 
+    <div class="row-mt-5">    
+      <div class="col">
+    
+        <button class="btn btn-success" type="button" (click)="postAndClear()" [disabled]="isPostDisabled">  Agregar <i class="bi bi-plus-circle-fill icon-padding"></i></button> <!-- Botón de agregar -->
+    
+        <button class="btn btn-danger" type="button" (click)="deleteItem()" [disabled]="isDeleteDisabled">Eliminar <i class="bi bi-trash3-fill icon-padding"></i></button> <!-- Botón de eliminar -->
+      </div>
+    </div>
+
+    <div class="row-mt-5">
+
+      <div class="col">
+    
+        <!-- Tabla condicional, solo se muestra si "datatable" está definido -->
+    
+         <table *ngIf="loadedCompetenciaId" id="dtCompetencia" class="table table-stripped"> 
+         <!-- <table *ngIf="datatable && selectedCompetenciaId"> -->
+    
+          <thead>
+    
+            <tr>
+    
+              <th class="select-column">Seleccionar</th> <!-- Encabezado de columna -->
+
+              <th class="id-column"> ID</th>
+              
+              <th class ="id-column"> Grupo </th> <!-- Encabezado de columna -->
+
+              <th class="id-column">Equipo Local</th> <!-- Encabezado de columna -->
+
+              <th class="id-column">Equipo Visitante</th> <!-- Encabezado de columna -->
+
+              <th class="id-column"> Sede </th> <!-- Encabezado de columna -->
+
+              <th class ="id-column"> Fecha </th> <!-- Encabezado de columna -->
+
+              <th class ="id-column"> Hora </th> <!-- Encabezado de columna -->
+
+            </tr>
+    
+          </thead>
+    
+          <tbody>
+            <!-- Bucle for para cada elemento de "datatable[0]" -->
+            <tr *ngFor="let item of getVisibleItems()">
+              <td>
+                <input type="checkbox" [(ngModel)]="item.seleccionado" (change)="selectItemAndStoreID(item)">
+              </td>
+              <td>{{item.partIDPartido}}</td>
+              <td>{{item.partGrupo}}</td>
+              <td>{{item.partIDEquipoL}}</td>
+              <td>{{item.partIDEquipoV}}</td>
+              <td>{{item.partIDSede}}</td>
+              <td>{{item.partFechaDate}}</td>
+              <td>{{item.partHoraTime}}</td>
+            </tr>
+          </tbody>      
+        </table>
+        <!-- Controles de paginación -->
+        <div class="text-center mt-3">
+          <ul class="pagination">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <a class="page-link" (click)="changePage(1)"><i class="bi bi-chevron-double-left"></i></a>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <a class="page-link" (click)="changePage(currentPage - 1)"><i class="bi bi-chevron-left"></i></a>
+            </li>
+            <li class="page-item" [class.active]="page === currentPage" *ngFor="let page of totalPagesArray">
+              <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <a class="page-link" (click)="changePage(currentPage + 1)"><i class="bi bi-chevron-right"></i></a>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <a class="page-link" (click)="changePage(totalPages)"><i class="bi bi-chevron-double-right"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>

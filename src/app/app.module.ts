@@ -25,6 +25,11 @@ import { FormsModule } from '@angular/forms';
 
 import { SharedDataService } from './components/services/sharedService';
 import { equiposService } from './components/services/equiposService';
+import { SedesService } from './components/services/sedesService';
+import { apostadoresService } from './components/services/apostadoresService';
+import { competenciasService } from './components/services/competenciasService';
+import { equiposxcompetenciaService } from './components/services/equiposxcompetenciasService';
+import { partidosGruposService } from './components/services/partidosgrupoService';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ControlGamblersComponent } from './components/pages/gamblers/component/control-gamblers/control-gamblers.component';
 import { TournamentspageComponent } from './components/pages/tournaments/components/tournamentspage/tournamentspage.component';
@@ -65,7 +70,7 @@ import { TeamsxtournamentComponent } from './components/pages/teamsxtournament/c
     RouterModule.forRoot([]),
     HttpClientModule
   ],
-  providers: [SharedDataService, equiposService],
+  providers: [SharedDataService, equiposService, SedesService, competenciasService, apostadoresService, partidosGruposService, equiposxcompetenciaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
