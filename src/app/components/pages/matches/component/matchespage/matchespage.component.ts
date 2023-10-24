@@ -36,6 +36,7 @@ export class MatchespageComponent implements OnInit
   isPostDisabled: boolean = true;
   isDeleteDisabled: boolean = true;
   isGroupsDisabled: boolean = true;
+  deleteCheck: boolean = false;
 
   constructor(private equiposService: equiposService, private competenciasService: competenciasService, private partidosGruposService: partidosGruposService, private sedesService: SedesService, private Router: Router){
 
@@ -85,6 +86,7 @@ export class MatchespageComponent implements OnInit
 
   onCompetenciaSelected(): void{
     if(this.loadedCompetenciaId !== null){
+      this.grupoSeleccionado = null;
       this.isGroupsDisabled = false;
       this.onDataTable()
     }
@@ -102,7 +104,26 @@ export class MatchespageComponent implements OnInit
   }
 
   deleteItem(){
-    //TODO: Se realiza luego del POST
+    const confirmacion = confirm('¿Seguro de eliminar el partido ' +  this.idPartidoSeleccionado + '?')
+    if(confirmacion){
+      this.deleteCheck = true;
+
+      if(this.deleteCheck && this.idPartidoSeleccionado != null ){
+        this.partidosGruposService.deletePartidosGrupo(this.idPartidoSeleccionado).subscribe(()=>
+        {
+           console.log('Elemento eliminado exitosamente');
+
+          this.onDataTable(); // Reitera la tabla
+        },
+        (error) =>{
+          console.error('Se ha producido un error de tipo ', error)
+        });
+      }
+
+    } else {
+      console.log('No se han producido cambios');
+    }
+
   }
 
   calculatePagination(): void {
@@ -127,7 +148,9 @@ export class MatchespageComponent implements OnInit
         console.log("ID almacenada es igual a " + this.idPartidoSeleccionado)
       }
     });
-
+    if(this.idPartidoSeleccionado != null){
+      this.isDeleteDisabled = false;
+    }
   }
 
   changePage(pageNumber: number): void {

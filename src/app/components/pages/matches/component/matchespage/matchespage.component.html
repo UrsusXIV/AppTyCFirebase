@@ -47,9 +47,9 @@
     <div class="row-mt-5">    
       <div class="col">
     
-        <button class="btn btn-success" type="button" (click)="postAndClear()" [disabled]="isPostDisabled">  Agregar <i class="bi bi-plus-circle-fill icon-padding"></i></button> <!-- Botón de agregar -->
+        <button class="btn btn-success" type="button" (click)="postAndClear()" [disabled]="isPostDisabled"> Agregar <i class="bi bi-plus-circle-fill icon-padding"></i></button> <!-- Botón de agregar -->
     
-        <button class="btn btn-danger" type="button" (click)="deleteItem()" [disabled]="isDeleteDisabled">Eliminar <i class="bi bi-trash3-fill icon-padding"></i></button> <!-- Botón de eliminar -->
+        <button class="btn btn-danger" type="button" (click)="deleteItem()" [disabled]="isDeleteDisabled"> Eliminar <i class="bi bi-trash3-fill icon-padding"></i></button> <!-- Botón de eliminar -->
       </div>
     </div>
 
@@ -94,8 +94,8 @@
               </td>
               <td>{{item.partIDPartido}}</td>
               <td>{{item.partGrupo}}</td>
-              <td>{{item.partIDEquipoL}}</td>
-              <td>{{item.partIDEquipoV}}</td>
+              <td>{{item.equipoLNombre}}</td>
+              <td>{{item.equipoVNombre}}</td>
               <td>{{item.partIDSede}}</td>
               <td>{{item.partFechaDate}}</td>
               <td>{{item.partHoraTime}}</td>
