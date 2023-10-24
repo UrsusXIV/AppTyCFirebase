@@ -61,7 +61,7 @@ export class partidosGruposService{
             partIDPartido: idPartido
         }
 
-        return this.http.delete(this.url, {body: requestBody})
+        return this.http.delete(this.url, {body: requestBody});
     }
 
 }
