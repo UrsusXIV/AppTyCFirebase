@@ -1,4 +1,6 @@
 <div class="container">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css" rel="stylesheet" >
     <!-- Fila con contenido centrado -->
   <div class="row text-center mt-4">  
         
@@ -23,15 +25,32 @@
           </option>
         </select>
 
-        <label for="equiposAñadibles" class="from-label">Equipos</label> 
+        <label for="equiposAñadibles" class="from-label">Equipo local</label> 
         
-        <select [(ngModel)]="loadedEquipoId">
+        <select [(ngModel)]="loadedEquipoIdL">
           <option value="" disabled selected>Selecciona un equipo </option>
-          <option *ngFor="let equipoCombo of comboEqDatatable[0]" [value]="equipoCombo.idEquipo">
-            {{ equipoCombo.equipoNombre }} 
+          <option *ngFor="let equipoComboL of comboEqDatatable[0]" [value]="equipoComboL.idEquipo">
+            {{ equipoComboL.equipoNombre }} 
           </option>
         </select>
 
+        <label for="sedesAñadibles" class="from-label"> Sedes </label>
+
+        <select [(ngModel)]="loadedSedeId">Sedes del partido.
+          <option value="" disabled selected>Selecciona una sede</option>
+          <option *ngFor="let sedeCombo of comboSedDatatable[0]" [value]="sedeCombo.sedeID">
+            {{sedeCombo.sedeNombre}}
+          </option>
+        </select>
+        
+        <label for="equiposAñadibles" class="from-label">Equipo visitante</label> 
+        
+        <select [(ngModel)]="loadedEquipoIdV">
+          <option value="" disabled selected>Selecciona un equipo </option>
+          <option *ngFor="let equipoComboV of comboEqDatatable[0]" [value]="equipoComboV.idEquipo">
+            {{ equipoComboV.equipoNombre }} 
+          </option>
+        </select>
         <label for="equiposAñadibles" class="from-label">Grupos</label> 
 
         <select [(ngModel)]="grupoSeleccionado" (change)="onGrupoSelected()" [disabled]="isGroupsDisabled">
@@ -41,6 +60,20 @@
           </option>
         </select>
         
+        <label for="fechaPartidos" class="from-label">Fecha del partido.</label>
+
+        <input type="text" class="form-control" [(ngModel)]="selectedDate" bsDatepicker [bsConfig]="datePickerConfig">
+
+        <label for="horarioPartidos" class="from-label">Horario del partido</label>
+
+        <select [(ngModel)]="horarioSeleccionado" [disabled]="isGroupsDisabled">
+          <option value ="" disabled selected>Selecciona un horario</option>
+           <!--Esta solucion es poco elegante, rudimentaria, pero hay problemas con la libreria y compatibilidad con el TimePicker-->
+           <option *ngFor="let horas of arrayHorario" [value]="horas">
+            {{horas}}
+           </option>
+        </select> 
+
 
     </div>
     <br> 
@@ -76,7 +109,7 @@
 
               <th class="id-column">Equipo Visitante</th> <!-- Encabezado de columna -->
 
-              <th class="id-column"> Sede </th> <!-- Encabezado de columna -->
+              <th class="id-column"> Estado </th> <!-- Encabezado de columna -->
 
               <th class ="id-column"> Fecha </th> <!-- Encabezado de columna -->
 
@@ -96,7 +129,7 @@
               <td>{{item.partGrupo}}</td>
               <td>{{item.equipoLNombre}}</td>
               <td>{{item.equipoVNombre}}</td>
-              <td>{{item.partIDSede}}</td>
+              <td>{{ item.partIDEstado === 1 ? 'No iniciado' : item.partIDEstado === 2 ? 'En juego' : item.partIDEstado === 3 ? 'Finalizado' : 'Valor desconocido' }}</td>
               <td>{{item.partFechaDate}}</td>
               <td>{{item.partHoraTime}}</td>
             </tr>

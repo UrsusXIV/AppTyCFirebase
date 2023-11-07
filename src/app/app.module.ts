@@ -4,6 +4,10 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SidebarModule } from 'ng-cdbangular';
+import { CDBFreeModule } from 'ng-cdbangular';
+import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NavbarComponent } from './components/navigation/navbar/component/navbar/navbar.component';
 import { SidebarComponent } from './components/navigation/sidebar/component/sidebar/sidebar.component';
@@ -68,9 +72,13 @@ import { TeamsxtournamentComponent } from './components/pages/teamsxtournament/c
     FormsModule,
     SidebarModule,
     RouterModule.forRoot([]),
-    HttpClientModule
+    TimepickerModule.forRoot(),
+    HttpClientModule,
+    CDBFreeModule,
+    BsDatepickerModule.forRoot(),
+    BrowserAnimationsModule
   ],
-  providers: [SharedDataService, equiposService, SedesService, competenciasService, apostadoresService, partidosGruposService, equiposxcompetenciaService],
+  providers: [SharedDataService, equiposService, SedesService, competenciasService, apostadoresService, partidosGruposService, equiposxcompetenciaService, BsDatepickerConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
