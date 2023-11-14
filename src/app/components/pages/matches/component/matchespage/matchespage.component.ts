@@ -6,6 +6,7 @@ import { SedesService } from 'src/app/components/services/sedesService';
 import { partidosGruposService } from 'src/app/components/services/partidosgrupoService';
 import { postPartidosGrupoDTO } from 'src/app/components/cruds/models/partidosgrupo/postpartidosgrupodto';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker'
+import { error } from 'ajv/dist/vocabularies/applicator/dependencies';
 
 
 @Component({
@@ -63,7 +64,11 @@ export class MatchespageComponent implements OnInit
   deleteCheck: boolean = false;
   selectedDate: Date | null = null;
   selectedTime: Date = new Date();
-
+  golesL: number = 0;
+  golesV: number = 0;
+  puntosL: number = 0;
+  puntosV: number = 0;
+  estadoPartido: number = 0;
 
   constructor(
     private equiposService: equiposService, 
@@ -113,7 +118,7 @@ export class MatchespageComponent implements OnInit
   }
 
   onDataTable(){
-    if(this.loadedCompetenciaId !== null && this.grupoSeleccionado == null){
+    if(this.loadedCompetenciaId !== null){
       this.idSeleccionadoComboCo = this.loadedCompetenciaId;
       this.grupoSeleccionado = "getall";
       this.partidosGruposService.getPartidosGrupo(0, this.idSeleccionadoComboCo, this.grupoSeleccionado).subscribe(
@@ -138,16 +143,55 @@ export class MatchespageComponent implements OnInit
 
   onGrupoSelected(): void{
     console.log("Grupo se encuentra posicionado en  " + this.grupoSeleccionado)
-    this.isPostDisabled = false;
     if(this.horarioSeleccionado == null){
       alert('El partido no tiene horario establecido.')
     };
     
   }
 
+  
 
   postAndClear(){
-    // TODO: Se realiza luego del GET funcional.
+    if(this.grupoSeleccionado == null || this.horarioSeleccionado == null || this.loadedCompetenciaId == null || this.loadedEquipoIdL == null || this.loadedEquipoIdV == null || this.loadedSedeId == null)
+    {
+      alert("Uno, o mas elementos requeridos para agregar un partido no se han establecido")
+    }
+    else
+    {
+      if(this.loadedCompetenciaId !== null && this.loadedEquipoIdL !== null && this.loadedEquipoIdV !== null && this.loadedSedeId !== null && this.grupoSeleccionado !== null && this.horarioSeleccionado !== null && this.selectedDate !== null)
+      {
+        const postPartidos: postPartidosGrupoDTO = 
+        {
+          
+          PartIDCompetencia: this.loadedCompetenciaId,
+          PartIDEquipoL: this.loadedEquipoIdL,
+          PartIDEquipoV: this.loadedEquipoIdV,
+          PartIDSede: this.loadedSedeId,
+          PartHoraTime: this.horarioSeleccionado,
+          PartGrupo: this.grupoSeleccionado,
+          PartFechaDate: this.selectedDate?.toISOString(),
+          PartGolesL:  this.golesL = 0,
+          PartGolesV: this.golesV = 0,
+          PartPuntosL: this.puntosL = 0,
+          PartPuntosV: this.puntosV = 0,
+          PartIDEstado: this.estadoPartido = 1
+          
+        }
+        this.partidosGruposService.postPartidosGrupo(postPartidos).subscribe(
+          (response) =>
+          {
+            console.log('POST EXITOSO' + response)
+            if(response){
+              this.onDataTable();
+            }
+          },
+          (errorPost) =>{
+            console.log("Se ha presentado un ERROR. " + errorPost)
+          }
+        )
+      }
+
+    }
   }
 
   deleteItem(){
@@ -207,3 +251,4 @@ export class MatchespageComponent implements OnInit
 
 }
 
+// BACKUP 7/11/2023

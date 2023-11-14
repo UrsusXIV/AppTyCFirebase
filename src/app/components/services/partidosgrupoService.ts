@@ -24,7 +24,7 @@ export class partidosGruposService{
     {
         const requestedParams=
         {
-            partIDPartido: postBody.PartIDPartido,
+            // partIDPartido: postBody.PartIDPartido,
 
             partIDCompetencia: postBody.PartIDCompetencia,
 
@@ -46,9 +46,9 @@ export class partidosGruposService{
 
             partGolesV: postBody.PartGolesV,
 
-            partPuntosL: postBody.PartPuntosL,
+            partPuntosL: postBody.PartPuntosL ,
 
-            partPuntosV: postBody.PartPuntosV
+            partPuntosV: postBody.PartPuntosV = 0
         };
 
         return this.http.post<postPartidosGrupoDTO>(this.url, requestedParams);

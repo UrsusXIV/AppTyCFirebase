@@ -1,6 +1,6 @@
 export class postPartidosGrupoDTO
 {
-    PartIDPartido: number = 0;
+    // PartIDPartido: number = 0;
 
     PartIDCompetencia: number = 0;
 
