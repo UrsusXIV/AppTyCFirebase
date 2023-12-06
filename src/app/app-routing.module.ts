@@ -18,6 +18,7 @@ import { ControlGamblersComponent } from './components/pages/gamblers/component/
 import { TournamentspageComponent } from './components/pages/tournaments/components/tournamentspage/tournamentspage.component';
 import { ControlTournamentsComponent } from './components/pages/tournaments/components/control-tournaments/control-tournaments.component';
 import { TeamsxtournamentComponent } from './components/pages/teamsxtournament/components/teamsxtournament/teamsxtournament.component';
+import { BetgroupsComponent } from './components/pages/betgroups/components/betgroups/betgroups.component';
 
 const routes: Routes = 
 [  
@@ -37,7 +38,8 @@ const routes: Routes =
 { path: 'controlGamblers', component: ControlGamblersComponent },
 { path: 'tournaments', component: TournamentspageComponent },
 { path: 'controlTournaments', component: ControlTournamentsComponent },
-{ path: 'TeamsXTournaments', component: TeamsxtournamentComponent }
+{ path: 'TeamsXTournaments', component: TeamsxtournamentComponent },
+{ path: 'BettingGroups', component: BetgroupsComponent }
 ];
 
 @NgModule({

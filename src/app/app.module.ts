@@ -39,6 +39,7 @@ import { ControlGamblersComponent } from './components/pages/gamblers/component/
 import { TournamentspageComponent } from './components/pages/tournaments/components/tournamentspage/tournamentspage.component';
 import { ControlTournamentsComponent } from './components/pages/tournaments/components/control-tournaments/control-tournaments.component';
 import { TeamsxtournamentComponent } from './components/pages/teamsxtournament/components/teamsxtournament/teamsxtournament.component';
+import { BetgroupsComponent } from './components/pages/betgroups/components/betgroups/betgroups.component';
 
 
 
@@ -64,7 +65,8 @@ import { TeamsxtournamentComponent } from './components/pages/teamsxtournament/c
     ControlGamblersComponent,
     TournamentspageComponent,
     ControlTournamentsComponent,
-    TeamsxtournamentComponent
+    TeamsxtournamentComponent,
+    BetgroupsComponent
   ],
   imports: [
     BrowserModule,
