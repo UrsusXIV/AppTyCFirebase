@@ -80,9 +80,12 @@
     <div class="row-mt-5">    
       <div class="col">
     
-        <button class="btn btn-success" type="button" (click)="postAndClear()"> Agregar <i class="bi bi-plus-circle-fill icon-padding"></i></button> <!-- Botón de agregar -->
+        <button class="btn btn-success" type="button" (click)="postAndClear()" [disabled]="isPostDisabled"> Agregar <i class="bi bi-plus-circle-fill icon-padding"></i></button> <!-- Botón de agregar -->
     
+        <button class="btn btn-warning m-2" type="button" (click)="updateMatch()" [disabled]="isPutDisabled"> Actualizar partido <i class="bi bi-plus-circle-fill icon-padding"></i></button> <!-- Botón de agregar -->
+
         <button class="btn btn-danger" type="button" (click)="deleteItem()" [disabled]="isDeleteDisabled"> Eliminar <i class="bi bi-trash3-fill icon-padding"></i></button> <!-- Botón de eliminar -->
+      
       </div>
     </div>
 
@@ -107,7 +110,11 @@
 
               <th class="id-column">Equipo Local</th> <!-- Encabezado de columna -->
 
+              <th class="id-column"> Goles </th> <!-- Encabezado de columna -->
+
               <th class="id-column">Equipo Visitante</th> <!-- Encabezado de columna -->
+
+              <th class="id-column"> Goles </th> <!-- Encabezado de columna -->
 
               <th class="id-column"> Estado </th> <!-- Encabezado de columna -->
 
@@ -123,17 +130,23 @@
             <!-- Bucle for para cada elemento de "datatable[0]" -->
             <tr *ngFor="let item of getVisibleItems()">
               <td>
-                <input type="checkbox" [(ngModel)]="item.seleccionado" (change)="selectItemAndStoreID(item)">
+                <input type="checkbox" [(ngModel)]="item.seleccionado" (ngModelChange)="onCheckboxChange($event, item)">
               </td>
               <td>{{item.partIDPartido}}</td>
               <td>{{item.partGrupo}}</td>
               <td>{{item.equipoLNombre}}</td>
+              <input type="number" [(ngModel)]="item.partGolesL" (change)="updateGolesL(item)" [disabled]="!item.seleccionado">
               <td>{{item.equipoVNombre}}</td>
-              <td>{{ item.partIDEstado === 1 ? 'No iniciado' : item.partIDEstado === 2 ? 'En juego' : item.partIDEstado === 3 ? 'Finalizado' : 'Valor desconocido' }}</td>
+              <input type="number" [(ngModel)]="item.partGolesV" (change)="updateGolesV(item)" [disabled]="!item.seleccionado">
+              <td>
+                <select [(ngModel)]="item.partIDEstado" (change)="updateEstatus(item)" [disabled]="!item.seleccionado">
+                  <option *ngFor="let estado of arrayEstadoPartido" [ngValue]="arrayEstadoPartido.indexOf(estado) + 1">{{estado}}</option>
+                </select>
+              </td>
               <td>{{item.partFechaDate}}</td>
               <td>{{item.partHoraTime}}</td>
             </tr>
-          </tbody>      
+          </tbody>        
         </table>
         <!-- Controles de paginación -->
         <div class="text-center mt-3">

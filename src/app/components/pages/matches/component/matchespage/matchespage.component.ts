@@ -5,6 +5,7 @@ import { competenciasService } from 'src/app/components/services/competenciasSer
 import { SedesService } from 'src/app/components/services/sedesService';
 import { partidosGruposService } from 'src/app/components/services/partidosgrupoService';
 import { postPartidosGrupoDTO } from 'src/app/components/cruds/models/partidosgrupo/postpartidosgrupodto';
+import { putPartidosGrupoDTO } from 'src/app/components/cruds/models/partidosgrupo/putpartidosgrupodto';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker'
 import { error } from 'ajv/dist/vocabularies/applicator/dependencies';
 
@@ -43,7 +44,8 @@ export class MatchespageComponent implements OnInit
     "19:30:00", "19:45:00", "20:00:00", "20:15:00", "20:30:00", "20:45:00",
     "21:00:00", "21:15:00", "21:30:00", "21:45:00", "22:00:00", "22:15:00",
     "22:30:00", "22:45:00", "23:00:00", "23:15:00", "23:30:00", "23:45:00"
-  ];  
+  ];
+  arrayEstadoPartido: string[] = ["No iniciado", "Iniciado", "Finalizado"];
   itemsPerPage: number = 10;
   currentPage: number = 1;
   totalPages: number = 0;
@@ -58,9 +60,11 @@ export class MatchespageComponent implements OnInit
   loadedEquipoIdL: number | null = null;
   loadedEquipoIdV: number | null = null;
   loadGrupoString: string | null = null;
-  isPostDisabled: boolean = true;
+  isPostDisabled: boolean = false;
+  isPutDisabled: boolean = true;
   isDeleteDisabled: boolean = true;
   isGroupsDisabled: boolean = true;
+  isStatusChangeDisabled: boolean = true;
   deleteCheck: boolean = false;
   selectedDate: Date | null = null;
   selectedTime: Date = new Date();
@@ -152,7 +156,7 @@ export class MatchespageComponent implements OnInit
   
 
   postAndClear(){
-    if(this.grupoSeleccionado == null || this.horarioSeleccionado == null || this.loadedCompetenciaId == null || this.loadedEquipoIdL == null || this.loadedEquipoIdV == null || this.loadedSedeId == null)
+    if(this.grupoSeleccionado == null || this.grupoSeleccionado == "getall" || this.horarioSeleccionado == null || this.loadedCompetenciaId == null || this.loadedEquipoIdL == null || this.loadedEquipoIdV == null || this.loadedSedeId == null)
     {
       alert("Uno, o mas elementos requeridos para agregar un partido no se han establecido")
     }
@@ -205,6 +209,9 @@ export class MatchespageComponent implements OnInit
            console.log('Elemento eliminado exitosamente');
 
           this.onDataTable(); // Reitera la tabla
+          this.isDeleteDisabled = true;
+          this.isPutDisabled = true;
+          this.isPostDisabled = false;
         },
         (error) =>{
           console.error('Se ha producido un error de tipo ', error)
@@ -235,18 +242,110 @@ export class MatchespageComponent implements OnInit
       if(element !== item){
         element.seleccionado = false
       } else {
-        this.idPartidoSeleccionado = item.partIDPartido
-        console.log("ID almacenada es igual a " + this.idPartidoSeleccionado)
+        this.idPartidoSeleccionado = item.partIDPartido;
+        this.golesL = item.partGolesL;
+        this.golesV = item.partGolesV;
+        this.estadoPartido = item.partIDEstado;
+        console.log("ID del partido almacenado es igual a " + this.idPartidoSeleccionado + " en sumatoria a sus parametros: " + this.golesL + " " +  this.golesV + " " + this.estadoPartido)
       }
     });
     if(this.idPartidoSeleccionado != null){
       this.isDeleteDisabled = false;
+      this.isPutDisabled = false;
+      this.isPostDisabled = true;
+      this.isStatusChangeDisabled = false;
     }
+  }
+
+  updateGolesL(item: any){
+    this.golesL = item.partGolesL;
+    console.log("Goles del Local, actualizados.");
+  }
+
+  updateGolesV(item: any){
+    this.golesV = item.partGolesV;
+    console.log("Goles del visitante, actualizados.");
+  }
+
+  updateEstatus(item: any){
+    this.estadoPartido = item.partIDEstado;
+    console.log("Estado del partido, actualizaod.")
   }
 
   changePage(pageNumber: number): void {
     this.currentPage = pageNumber
 
+  }
+
+  onCheckboxChange(event: any, item: any) {
+    if (event === false) {
+      // El checkbox ha sido deseleccionado, realiza la lógica correspondiente aquí
+      this.handleDeselection(item);
+    } else {
+      // El checkbox ha sido seleccionado, realiza la lógica correspondiente aquí
+      this.selectItemAndStoreID(item);
+    }
+  }
+  
+  handleDeselection(item: any) {
+
+    this.isDeleteDisabled = true;
+    this.isPostDisabled = false;
+    this.isPutDisabled = true;
+    this.isStatusChangeDisabled = true;
+
+    console.log('Checkbox deseleccionado', item);
+  }
+  
+  updateMatch()
+  {
+    if(this.idPartidoSeleccionado == null)
+    {
+      alert("No se encuentra un partido seleccionado.")
+    }
+    else
+    {
+      if(this.idPartidoSeleccionado)
+      {
+        if(this.golesL > this.golesV){
+          this.puntosL = 3;
+        }
+        if (this.golesL < this.golesV){
+          this.puntosV = 3;
+        }
+        if (this.golesL == this.golesV){
+          this.puntosL = 1;
+          this.puntosV = 1;
+        }
+
+        if(this.estadoPartido == 1)
+        {
+          this.puntosL = 0;
+          this.puntosV = 0;
+        }
+
+        const putPartidosGrupo: putPartidosGrupoDTO =
+        {
+          partIDPartido: this.idPartidoSeleccionado,
+          partIDEstado: this.estadoPartido,
+          partGolesL: this.golesL,
+          partGolesV: this.golesV,
+          partPuntosL: this.puntosL,
+          partPuntosV: this.puntosV
+        }
+        this.partidosGruposService.putPartidosGrupo(putPartidosGrupo).subscribe
+        (
+          (responsePut) =>
+          {
+            console.log('PUT EXITOSO ' + responsePut)
+            if(responsePut){
+              this.onDataTable();
+            }
+          },
+          (errorPut) =>{ console.log('Se ha presentado un ERROR ' + errorPut);}
+        )
+      }
+    }
   }
 
 }

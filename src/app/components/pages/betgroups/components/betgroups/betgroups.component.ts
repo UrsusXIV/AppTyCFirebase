@@ -55,25 +55,25 @@ export class BetgroupsComponent implements OnInit
     {
       if(this.idGrupoApuestasSeleccionado > 0 && this.grupoDescripcionApPostPut !== null)
       {
-        const postGruposAp: gruposApuestasDTO =
+        const putGruposAp: gruposApuestasDTO =
         {
           idGruposAp: this.idGrupoApuestasSeleccionado,
           grupoApDescripcion: this.grupoDescripcionApPostPut
         
         }
-        this.gruposApuestasService.putGruposApuestas(postGruposAp).subscribe
+        this.gruposApuestasService.putGruposApuestas(putGruposAp).subscribe
         (
           (response) =>
           {
-            console.log('POST EXITOSO' + response)
+            console.log('PUT EXITOSO' + response)
             if(response)
             {
               this.onDataTable();
             }
           },
-          (errorPost) =>
+          (errorPut) =>
           {
-            console.log("Se ha presentado un ERROR " + errorPost);
+            console.log("Se ha presentado un ERROR " + errorPut);
           }
         )
       }

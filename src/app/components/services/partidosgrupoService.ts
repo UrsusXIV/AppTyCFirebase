@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { postPartidosGrupoDTO } from "../cruds/models/partidosgrupo/postpartidosgrupodto";
+import { putPartidosGrupoDTO } from "../cruds/models/partidosgrupo/putpartidosgrupodto";
 
 @Injectable({providedIn: 'root'})
 
@@ -52,6 +53,19 @@ export class partidosGruposService{
         };
 
         return this.http.post<postPartidosGrupoDTO>(this.url, requestedParams);
+    }
+
+    putPartidosGrupo(partido: putPartidosGrupoDTO): Observable<putPartidosGrupoDTO>{
+        const requestBody = 
+        {
+            partIDPartido: partido.partIDPartido, 
+            partIDEstado: partido.partIDEstado, 
+            partGolesL: partido.partGolesL, 
+            partGolesV: partido.partGolesV, 
+            partPuntosL: partido.partPuntosL, 
+            partPuntosV: partido.partPuntosV
+        };
+        return this.http.put<putPartidosGrupoDTO>(this.url, requestBody);
     }
 
     deletePartidosGrupo(idPartido: number)
