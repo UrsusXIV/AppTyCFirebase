@@ -1,13 +1,14 @@
 .content-container {
-  display: flex;
-  height: calc(100vh - 60px); /* Resta el tamaño de la navbar */
-}
-
-.sidebar-container {
-  width: 200px;
-}
-
-.page-container {
-  flex: 1;
-  margin-left: 80px; /* Ajusta el espacio entre la sidebar y el contenido */
-}
+    display: flex;
+    height: calc(100vh - 60px); /* Resta el tamaño de la navbar */
+  }
+  
+  .sidebar-container {
+    width: 200px;
+  }
+  
+  .page-container {
+    flex: 1;
+    margin-left: 80px; /* Ajusta el espacio entre la sidebar y el contenido */
+  }
+  

@@ -89,7 +89,8 @@ export class TournamentspageComponent implements OnInit
     this.selectedName = 'Competencia a añadir';
     this.sharedDataService.setIdSeleccionado(this.idSeleccionado);
     this.sharedDataService.setNombreSeleccionado(this.selectedName);
-
+    this.updateModeEnabled = false;
+    this.sharedDataService.setUpdateModeEnabled(this.updateModeEnabled);
 
   }
 
