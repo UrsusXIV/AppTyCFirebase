@@ -62,8 +62,6 @@ export class partidosGruposService{
             partIDEstado: partido.partIDEstado, 
             partGolesL: partido.partGolesL, 
             partGolesV: partido.partGolesV, 
-            partPuntosL: partido.partPuntosL, 
-            partPuntosV: partido.partPuntosV
         };
         return this.http.put<putPartidosGrupoDTO>(this.url, requestBody);
     }

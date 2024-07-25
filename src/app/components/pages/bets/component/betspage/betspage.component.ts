@@ -5,6 +5,7 @@ import { getapuestasdto } from 'src/app/components/cruds/models/apuestas/getapue
 import { postapuestasdto } from 'src/app/components/cruds/models/apuestas/postapuestasdto';
 import { putapuestasdto } from 'src/app/components/cruds/models/apuestas/putapuestasdto';
 import { competenciasService } from 'src/app/components/services/competenciasService';
+import { SharedDataService } from 'src/app/components/services/sharedService';
 
 @Component({
   selector: 'app-betspage',
@@ -28,13 +29,18 @@ export class BetspageComponent implements OnInit
   golesL: number = 0;
   golesV: number = 0;
   estadoPartido: number = 0;
-  testApostadorID: number = 2;
+  testApostadorID: number = 0;
+  sharedUserID: number | null = null;
 
   constructor
-  (private apuestasService: apuestasService, private competenciasService: competenciasService, private Router: Router){}
+  (private apuestasService: apuestasService, private competenciasService: competenciasService, private Router: Router, private shardDataService: SharedDataService){}
     
   ngOnInit(): void 
   {
+    this.sharedUserID = this.shardDataService.getIdUsuario()
+    if(this.sharedUserID != null){
+      this.testApostadorID = this.sharedUserID
+    }
     this.initComboCom()
   }
 
@@ -64,15 +70,15 @@ export class BetspageComponent implements OnInit
               {
                 const postBody: postapuestasdto = 
                 {
-                  ApIDApostador: 2, // Hardcodeado, de momento
+                  ApIDApostador: this.testApostadorID, 
 
                   ApIDPartido: element.apIDPartido,
       
                   ApIDCompetencia: element.apIDCompetencia,
 
-                  ApGolesL: 0,
+                  ApGolesL: -1,
       
-                  ApGolesV: 0,
+                  ApGolesV: -1,
       
                   ApPuntosObtenidos: 0 // Hardcodeado, error de diseño.
                 }
@@ -105,47 +111,6 @@ export class BetspageComponent implements OnInit
     }
   }
 
-  postAndClear()
-  {
-    if(this.loadedCompetenciaId == null || this.idPartidoSeleccionado == null )
-    {
-      alert("No se ha seleccionado un dato requerido.")
-    }
-
-    else
-    {
-      if(this.loadedCompetenciaId !== null || this.idPartidoSeleccionado !== null)
-      {
-        const postApuestas: postapuestasdto =
-        {
-          ApIDApostador: this.testApostadorID, // Hardcodeado, de momento
-
-          ApIDPartido: this.idPartidoSeleccionado,
-      
-          ApIDCompetencia: this.loadedCompetenciaId,
-      
-          ApGolesL: this.golesL,
-      
-          ApGolesV: this.golesV,
-      
-          ApPuntosObtenidos: 0 // Hardcodeado, error de diseño.
-        }
-        this.apuestasService.postApuestas(postApuestas).subscribe(
-          (response) =>
-          {
-            console.log('POST EXITOSO ' + response)
-            if(response){
-              this.onDataTable();
-            }
-          },
-          (errorPost) =>
-          {
-            console.log('Se ha presentado un error. ' + errorPost)
-          }
-        )
-      }
-    }
-  }
 
   getVisibleItems(): any[] {
     const starIndex = (this.currentPage -1) * this.itemsPerPage;

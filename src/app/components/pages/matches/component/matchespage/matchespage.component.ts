@@ -307,22 +307,6 @@ export class MatchespageComponent implements OnInit
     {
       if(this.idPartidoSeleccionado)
       {
-        if(this.golesL > this.golesV){
-          this.puntosL = 3;
-        }
-        if (this.golesL < this.golesV){
-          this.puntosV = 3;
-        }
-        if (this.golesL == this.golesV){
-          this.puntosL = 1;
-          this.puntosV = 1;
-        }
-
-        if(this.estadoPartido == 1)
-        {
-          this.puntosL = 0;
-          this.puntosV = 0;
-        }
 
         const putPartidosGrupo: putPartidosGrupoDTO =
         {
@@ -330,9 +314,8 @@ export class MatchespageComponent implements OnInit
           partIDEstado: this.estadoPartido,
           partGolesL: this.golesL,
           partGolesV: this.golesV,
-          partPuntosL: this.puntosL,
-          partPuntosV: this.puntosV
         }
+
         this.partidosGruposService.putPartidosGrupo(putPartidosGrupo).subscribe
         (
           (responsePut) =>

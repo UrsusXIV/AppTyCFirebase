@@ -8,8 +8,4 @@ export class putPartidosGrupoDTO
 
     partGolesV: number = 0;
 
-    partPuntosL: number = 0;
-    
-    partPuntosV: number = 0;
-
 }

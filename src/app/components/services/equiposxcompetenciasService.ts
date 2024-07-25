@@ -26,7 +26,7 @@ export class equiposxcompetenciaService{
 
     deleteEquiposXCompetencia(idE: number, idC: number){ //idE = idEquipo, idC = idCompetencia.
 
-        const requestBody = {IDEquipos: idE, IDCompetencia: idC};
+        const requestBody = {idEquipo: idE, idCompetencia: idC};
 
         return this.http.delete(this.url, { body: requestBody });
     }

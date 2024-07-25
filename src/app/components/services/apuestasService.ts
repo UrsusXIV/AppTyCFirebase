@@ -39,7 +39,7 @@ export class apuestasService{
         const requestedParams ={
             apGolesL: putBody.ApGolesL,
             apGolesV: putBody.ApGolesV,
-            apIDPartido: putBody.ApIDApostador,
+            apIDPartido: putBody.ApIDPartido,
             apIDApostador: putBody.ApIDApostador
         };
         return this.http.put<putapuestasdto>(this.url, requestedParams);

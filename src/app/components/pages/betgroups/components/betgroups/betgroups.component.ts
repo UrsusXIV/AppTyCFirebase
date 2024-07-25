@@ -82,7 +82,7 @@ export class BetgroupsComponent implements OnInit
   
   deleteItem(): void
   {
-    const confirmacion = confirm('¿Estas seguro de eliminar el grupo ' + this.selectedGroup + '?')
+    const confirmacion = confirm('¿Estas seguro de eliminar el grupo ' + this.idGrupoApuestasSeleccionado + '?')
     
     if(confirmacion)
     {
@@ -127,6 +127,7 @@ export class BetgroupsComponent implements OnInit
           this.isDeleteDisabled = false;
           this.isUpdateDisabled = false;
           this.isPostDisabled = true;
+          console.log("idGrupoApuestasSeleccionado = " + this.idGrupoApuestasSeleccionado)
   
           if (this.idGrupoApuestasSeleccionado != null) {
             // Revisar si necesito el sharedData luego.

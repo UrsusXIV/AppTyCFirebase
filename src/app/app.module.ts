@@ -41,6 +41,7 @@ import { ControlTournamentsComponent } from './components/pages/tournaments/comp
 import { TeamsxtournamentComponent } from './components/pages/teamsxtournament/components/teamsxtournament/teamsxtournament.component';
 import { BetgroupsComponent } from './components/pages/betgroups/components/betgroups/betgroups.component';
 import { GamblersxgroupsComponent } from './components/pages/gamblerxgroups/components/gamblersxgroups/gamblersxgroups.component';
+import { posicionesService } from './components/services/posicionesServices';
 
 
 
@@ -82,7 +83,7 @@ import { GamblersxgroupsComponent } from './components/pages/gamblerxgroups/comp
     BsDatepickerModule.forRoot(),
     BrowserAnimationsModule
   ],
-  providers: [SharedDataService, equiposService, SedesService, competenciasService, apostadoresService, partidosGruposService, equiposxcompetenciaService, BsDatepickerConfig],
+  providers: [SharedDataService, equiposService, SedesService, competenciasService, apostadoresService, partidosGruposService, equiposxcompetenciaService, posicionesService, BsDatepickerConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
