@@ -16,7 +16,7 @@ export class NavbarComponent {
 
   }
   idUsuario: number | null = null;
-  usuarios: Usuario[] = [ {id: 1, nombre: "Usuario 1"}, {id:2, nombre: "Usuario 2"}, {id: 3, nombre: "Usuario 3"}, {id: 4, nombre: "KIKO"}]
+  usuarios: Usuario[] = [ {id: 1, nombre: "Usuario 1"}, {id:2, nombre: "Usuario 2"}, {id: 3, nombre: "Usuario 3"}, {id: 4, nombre: "Usuario 4"}]
 
   selectUsuario(usuario: Usuario): void {
     this.idUsuario = usuario.id;
