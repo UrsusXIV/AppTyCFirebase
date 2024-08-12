@@ -42,6 +42,9 @@ import { TeamsxtournamentComponent } from './components/pages/teamsxtournament/c
 import { BetgroupsComponent } from './components/pages/betgroups/components/betgroups/betgroups.component';
 import { GamblersxgroupsComponent } from './components/pages/gamblerxgroups/components/gamblersxgroups/gamblersxgroups.component';
 import { posicionesService } from './components/services/posicionesServices';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth,getAuth } from '@angular/fire/auth';
 
 
 
@@ -81,7 +84,9 @@ import { posicionesService } from './components/services/posicionesServices';
     HttpClientModule,
     CDBFreeModule,
     BsDatepickerModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth())
   ],
   providers: [SharedDataService, equiposService, SedesService, competenciasService, apostadoresService, partidosGruposService, equiposxcompetenciaService, posicionesService, BsDatepickerConfig],
   bootstrap: [AppComponent]
